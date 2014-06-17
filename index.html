@@ -69,9 +69,20 @@ function init() {
     toys.push(createToy(scene.toys[i]));
   }
 
-  container.addEventListener('mouseover',function(e){
-    console.log("oy");
-  });
+  container.addEventListener('mouseover', onToyOver);
+}
+
+function onToyOver(event) {
+  var toy = event.target.toyData;
+  if (!toy) return;
+
+  // play note
+  var chord = toy.midiNotes[toy.currentStep].chord;
+  for (var i = 0; i < chord.length; i++){
+    console.log(chord[i].note);
+
+  }
+  toy.currentStep = ++toy.currentStep % toy.midiNotes.length;
 }
 
 function createToy(src) {
@@ -88,6 +99,7 @@ function createToy(src) {
       p.setAttribute('cx', src.positionX);
       p.setAttribute('cy', src.positionY);
       p.setAttribute('r', src.radius);
+      p.toyData = src;
       p.setAttribute('class', src.toyType + ' toy color-' + src.color);
       container.appendChild(p);
       break;
@@ -112,6 +124,7 @@ function createToy(src) {
       }
 
       p.setAttribute('points', points.join(','));
+      p.toyData = src;
       p.setAttribute('class', src.toyType + ' toy color-' + src.color);
       container.appendChild(p);
       break;
