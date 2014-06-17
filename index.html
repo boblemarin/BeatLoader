@@ -11,7 +11,11 @@
   </head>
   <body>
 
-  <div class="container"></div>
+  <svg class="container" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+  </svg>
+
 
   <footer>
     <span class="title"></span>
@@ -27,7 +31,9 @@
 
     <script type="text/javascript">
 
-var request, scene, container, toys,
+var request, scene, toys,
+    container = document.querySelector('.container'),
+    svgNS = 'http://www.w3.org/2000/svg',
     colors = {
       blue: '#459a9b',
       yellow: '#f69539',
@@ -39,7 +45,142 @@ var request, scene, container, toys,
       blue2: '#77669f'
     };
 
-//load();
+load();
+
+
+function init() {
+  console.log(scene);
+
+  // place copyright info and thumbnail
+  document.querySelector('footer .title').innerHTML = scene.title;
+  document.querySelector('footer .author').innerHTML = 'par ' + scene.author;
+  document.querySelector('footer .version').innerHTML = 'v' + scene.version;
+  document.querySelector('footer .thumbnail').src = 'data:image/png;base64,' + scene.screenshot;
+
+  // draw toys
+  container.innerHTML = '';
+
+  var i = 0,
+      n = scene.toys.length,
+      c,ctx;
+  toys = [];
+
+  for (i; i < n; i++) {
+    toys.push(createToy(scene.toys[i]));
+  }
+}
+
+function createToy(src) {
+  var toy = {
+    src: src
+  }
+
+  //console.log("Toy: "+ src.color + " (" + src.positionX + " - " + src.positionY + ")" );
+
+  switch (src.toyType) {
+    case 'StepGearToy':
+    case 'PolygonToy' :
+      var p = document.createElementNS(svgNS, 'circle');
+      p.setAttribute('cx', src.positionX);
+      p.setAttribute('cy', src.positionY);
+      p.setAttribute('r', src.radius);
+      p.setAttribute('class', 'color-' + src.color);
+      container.appendChild(p);
+      break;
+
+    case 'LineToy':
+      console.log(src);
+      var p = document.createElementNS(svgNS, 'polygon');
+      var x = src.positionX,
+          y = src.positionY,
+          sin = Math.sin(src.rotation / 180 * Math.PI),
+          cos = -Math.cos(src.rotation / 180 * Math.PI),
+          t = src.thickness,
+          t2 = t * .5,
+          s = src.size,
+          s2 = s * .5,
+          points = [
+            x - t2, y - s2,
+            x, y - s2 - t2,
+            x + t2, y - s2,
+            x + t2, y + s2,
+            x, y + s2 + t2,
+            x - t2, y + s2,
+
+            x + (-t2 * cos - -s2 * sin), y + (-t2 * sin + -s2 * cos)
+
+          ];
+
+          // x - t2, y - s2,
+          // x, y - s2 - t2,
+          // x + t2, y - s2,
+          // x + t2, y + s2,
+          // x, y + s2 + t2,
+          // x - t2, y + s2
+
+      p.setAttribute('points', points.join(','));
+
+      p.setAttribute('class', 'color-' + src.color);
+      container.appendChild(p);
+      // var s = ;
+      // var c = ;
+      // ctx.strokeStyle = colors[src.color];
+      // ctx.lineWidth = src.thickness;
+      // ctx.lineCap = 'round';
+      // ctx.beginPath();
+      // ctx.moveTo(src.positionX - s * src.size * .5, src.positionY + c * src.size * .5);
+      // ctx.lineTo(src.positionX + s * src.size * .5, src.positionY - c * src.size * .5);
+      // ctx.stroke();
+      break;
+  }
+
+  //toy.ctx = ctx;
+  //container.appendChild(toy.canvas);
+  return toy;
+}
+
+//createSVG();
+
+function createSVG() {
+  var p = document.createElementNS(svgNS, 'polygon');
+
+  p.setAttribute('points','0,20, 20,0, 40,20, 40,140, 20,160, 0,140');
+  p.setAttribute('cx',359);
+  p.setAttribute('cy',140);
+  p.style.fill = '#459a9b';
+  //p.style.webkitTransform = 'translate(359px,140px) rotation(49deg)';
+
+  //s.style.width = '40px';
+  //s.style.height = '160px';
+  //s.appendChild(p);
+
+  container.appendChild(p);
+}
+
+
+
+
+/************************************************************
+FILE LOADING SECTION
+************************************************************/
+
+function load() {
+  request = new XMLHttpRequest();
+  request.onload = onLoadEnd;
+  request.open('GET', 'TestCouleurs.bs', true);
+  request.send();
+}
+
+function onLoadEnd() {
+  scene = JSON.parse(request.response);
+  init();
+}
+
+
+
+/************************************************************
+FILE DROPPING SECTION
+************************************************************/
 
 function onDragOver(e) {
   e.stopPropagation();
@@ -69,95 +210,6 @@ function openFile( f ) {
   r.readAsText(f);
 }
 
-function load() {
-  request = new XMLHttpRequest();
-  request.onload = onLoadEnd;
-  request.open('GET', 'TestCouleurs.bs', true);
-  request.send();
-}
-
-function onLoadEnd() {
-  scene = JSON.parse(request.response);
-  // request.onload = null;
-  // request = null;
-  init();
-}
-
-function init() {
-  console.log(scene);
-
-  // place copyright info and thumbnail
-  document.querySelector('footer .title').innerHTML = scene.title;
-  document.querySelector('footer .author').innerHTML = 'par ' + scene.author;
-  document.querySelector('footer .version').innerHTML = 'v' + scene.version;
-
-
-  document.querySelector('footer .thumbnail').src = 'data:image/png;base64,' + scene.screenshot;
-
-  // draw toys
-  container = document.querySelector('.container');
-  container.innerHTML = '';
-
-  var i = 0,
-      n = scene.toys.length,
-      c,ctx;
-  toys = [];
-  for (i; i < n; i++) {
-    toys.push(createToy(scene.toys[i]));
-  }
-}
-
-function createToy(src) {
-  var toy = {
-    src: src,
-    canvas: document.createElement('canvas')
-  }
-  toy.canvas.width = 1024;
-  toy.canvas.height = 758;
-  var ctx = toy.canvas.getContext('2d'),
-      x = src.positionX,
-      y = src.positionY,
-      r = src.radius,
-      t = src.thickness,
-      s = src.size;
-
-  console.log("Toy: "+ src.color + " (" + src.positionX + " - " + src.positionY + ")" );
-
-  switch (src.toyType) {
-    case 'StepGearToy':
-    case 'PolygonToy' :
-      ctx.fillStyle = colors[src.color];
-      ctx.beginPath();
-      ctx.moveTo(src.positionX+src.radius, src.positionY);
-      ctx.arc(src.positionX, src.positionY, src.radius, 0, 2*Math.PI, true);
-      ctx.fill();
-      break;
-
-    case 'LineToy':
-      var s = Math.sin(src.rotation / 180 * Math.PI);
-      var c = Math.cos(src.rotation / 180 * Math.PI);
-      ctx.strokeStyle = colors[src.color];
-      ctx.lineWidth = src.thickness;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(src.positionX - s * src.size * .5, src.positionY + c * src.size * .5);
-      ctx.lineTo(src.positionX + s * src.size * .5, src.positionY - c * src.size * .5);
-      ctx.stroke();
-      break;
-  }
-
-  toy.ctx = ctx;
-  container.appendChild(toy.canvas);
-  return toy;
-}
-
-function createSVG(points) {
-  var s = document.createElement('svg'),
-      p = document.createElement('polygon');
-
-  //p.setAttribute('points',)
-
-}
 /*
 TODO:
 

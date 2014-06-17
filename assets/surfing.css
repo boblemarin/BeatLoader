@@ -47,9 +47,11 @@ footer .thumbnail {
   transition: opacity .3s linear;
   -webkit-box-shadow: 00px 0 5px 0 rgba(0,0,0,1);
   box-shadow: 00px 0 5px 0 rgba(0,0,0,1);
+  pointer-events: none;
 }
 
 footer:hover .thumbnail {
+  pointer-events: all;
   opacity: 1;
 }
 
@@ -62,17 +64,34 @@ footer:hover .thumbnail {
   box-shadow: 00px 0 5px 0 rgba(0,0,0,1);
 }
 
-.container canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1024px;
-  height: 768px;
+.container *:hover {
+  opacity: .5;
 }
 
-
-
-
+svg .color-blue {
+  fill: #459a9b;
+}
+svg .color-yellow {
+  fill: #f69539;
+}
+svg .color-pink {
+  fill: #e4679a;
+}
+svg .color-green {
+  fill: #22b14b;
+}
+svg .color-white {
+  fill: #bbbdbf;
+}
+svg .color-pink2 {
+  fill: #e22851;
+}
+svg .color-yellow2 {
+  fill: #fefe48;
+}
+svg .color-blue2 {
+  fill: #77669f;
+}
     /*
 
 html,body{ height:100%; }
