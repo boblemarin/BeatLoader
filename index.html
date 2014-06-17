@@ -84,54 +84,49 @@ function createToy(src) {
       p.setAttribute('cx', src.positionX);
       p.setAttribute('cy', src.positionY);
       p.setAttribute('r', src.radius);
-      p.setAttribute('class', 'color-' + src.color);
+      p.setAttribute('class', 'toy color-' + src.color);
       container.appendChild(p);
       break;
 
     case 'LineToy':
-      console.log(src);
       var p = document.createElementNS(svgNS, 'polygon');
       var x = src.positionX,
           y = src.positionY,
           sin = Math.sin(src.rotation / 180 * Math.PI),
-          cos = -Math.cos(src.rotation / 180 * Math.PI),
+          cos = Math.cos(src.rotation / 180 * Math.PI),
           t = src.thickness,
-          t2 = t * .5,
           s = src.size,
           s2 = s * .5,
           points = [
-            x - t2, y - s2,
-            x, y - s2 - t2,
-            x + t2, y - s2,
-            x + t2, y + s2,
-            x, y + s2 + t2,
-            x - t2, y + s2,
-
-            x + (-t2 * cos - -s2 * sin), y + (-t2 * sin + -s2 * cos)
-
+            -t, -s2,
+            0, -s2 -t,
+            t, -s2,
+            t, s2,
+            0, s2 + t,
+            -t, s2
+            // x - t2, y - s2,
+            // x, y - s2 - t2,
+            // x + t2, y - s2,
+            // x + t2, y + s2,
+            // x, y + s2 + t2,
+            // x - t2, y + s2
           ];
+      for(var i = 0; i < points.length; i += 2) {
+        var px = points[i],
+            py = points[i+1];
 
-          // x - t2, y - s2,
-          // x, y - s2 - t2,
-          // x + t2, y - s2,
-          // x + t2, y + s2,
-          // x, y + s2 + t2,
-          // x - t2, y + s2
+        points[i] = x + (px * cos - py * sin);
+        points[i+1] = y + (px * sin + py * cos);
+      }
 
       p.setAttribute('points', points.join(','));
 
-      p.setAttribute('class', 'color-' + src.color);
+      p.setAttribute('class', 'toy color-' + src.color);
       container.appendChild(p);
-      // var s = ;
-      // var c = ;
-      // ctx.strokeStyle = colors[src.color];
-      // ctx.lineWidth = src.thickness;
-      // ctx.lineCap = 'round';
-      // ctx.beginPath();
-      // ctx.moveTo(src.positionX - s * src.size * .5, src.positionY + c * src.size * .5);
-      // ctx.lineTo(src.positionX + s * src.size * .5, src.positionY - c * src.size * .5);
-      // ctx.stroke();
       break;
+
+    default:
+      console.log('Unsupported toy : ' + src.toyType);
   }
 
   //toy.ctx = ctx;
