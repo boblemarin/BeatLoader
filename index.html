@@ -29,21 +29,29 @@
       //(function(){var lastTime=0;var vendors=['ms','moz','webkit','o'];for(var x=0;x<vendors.length&&!window.requestAnimationFrame;++x){window.requestAnimationFrame=window[vendors[x]+'RequestAnimationFrame'];window.cancelAnimationFrame=window[vendors[x]+'CancelAnimationFrame']||window[vendors[x]+'CancelRequestAnimationFrame'];}if(!window.requestAnimationFrame)window.requestAnimationFrame=function(callback,element){var currTime=new Date().getTime();var timeToCall=Math.max(0,16-(currTime-lastTime));var id=window.setTimeout(function(){callback(currTime+timeToCall);},timeToCall);lastTime=currTime+timeToCall;return id;};if(!window.cancelAnimationFrame)window.cancelAnimationFrame=function(id){clearTimeout(id);};}());
     </script>
 
+    <script type="text/javascript" src="assets/js/tsw.min.js"></script>
+    <script type="text/javascript" src="assets/js/synth.js"></script>
     <script type="text/javascript">
 
-var request, scene, toys,
-    container = document.querySelector('.container'),
-    svgNS = 'http://www.w3.org/2000/svg',
-    colors = {
-      blue: '#459a9b',
-      yellow: '#f69539',
-      pink: '#e4679a',
-      green: '#22b14b',
-      white: '#bbbdbf',
-      pink2: '#e22851',
-      yellow2: '#fefe48',
-      blue2: '#77669f'
-    };
+var
+  request, scene, toys,
+  synth = new Synth({
+                    context: tsw.context(),
+                    speakersOn: true
+                }),
+  midiNotes = ['C3','D3','F3','G3','A3'],
+  container = document.querySelector('.container'),
+  svgNS = 'http://www.w3.org/2000/svg',
+  colors = {
+    blue: '#459a9b',
+    yellow: '#f69539',
+    pink: '#e4679a',
+    green: '#22b14b',
+    white: '#bbbdbf',
+    pink2: '#e22851',
+    yellow2: '#fefe48',
+    blue2: '#77669f'
+  };
 
 load();
 
@@ -70,6 +78,7 @@ function init() {
   }
 
   container.addEventListener('mouseover', onToyOver);
+  container.addEventListener('mouseout', onToyOut);
 }
 
 function onToyOver(event) {
@@ -79,8 +88,21 @@ function onToyOver(event) {
   // play note
   var chord = toy.midiNotes[toy.currentStep].chord;
   for (var i = 0; i < chord.length; i++){
-    console.log(chord[i].note);
+    //console.log(midiNotes[chord[i].note]);
+    synth.playNote(midiNotes[chord[i].note]);
+  }
+  //toy.currentStep = ++toy.currentStep % toy.midiNotes.length;
+}
 
+function onToyOut(event) {
+  var toy = event.target.toyData;
+  if (!toy) return;
+
+  // play note
+  var chord = toy.midiNotes[toy.currentStep].chord;
+  for (var i = 0; i < chord.length; i++){
+    //console.log(midiNotes[chord[i].note]);
+    synth.stopNote(midiNotes[chord[i].note]);
   }
   toy.currentStep = ++toy.currentStep % toy.midiNotes.length;
 }
