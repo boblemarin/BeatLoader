@@ -68,6 +68,10 @@ function init() {
   for (i; i < n; i++) {
     toys.push(createToy(scene.toys[i]));
   }
+
+  container.addEventListener('mouseover',function(e){
+    console.log("oy");
+  });
 }
 
 function createToy(src) {
@@ -84,45 +88,73 @@ function createToy(src) {
       p.setAttribute('cx', src.positionX);
       p.setAttribute('cy', src.positionY);
       p.setAttribute('r', src.radius);
-      p.setAttribute('class', 'toy color-' + src.color);
+      p.setAttribute('class', src.toyType + ' toy color-' + src.color);
       container.appendChild(p);
       break;
 
     case 'LineToy':
-      var p = document.createElementNS(svgNS, 'polygon');
-      var x = src.positionX,
-          y = src.positionY,
-          sin = Math.sin(src.rotation / 180 * Math.PI),
-          cos = Math.cos(src.rotation / 180 * Math.PI),
-          t = src.thickness,
-          s = src.size,
-          s2 = s * .5,
-          points = [
-            -t, -s2,
-            0, -s2 -t,
-            t, -s2,
-            t, s2,
-            0, s2 + t,
-            -t, s2
-            // x - t2, y - s2,
-            // x, y - s2 - t2,
-            // x + t2, y - s2,
-            // x + t2, y + s2,
-            // x, y + s2 + t2,
-            // x - t2, y + s2
-          ];
-      for(var i = 0; i < points.length; i += 2) {
-        var px = points[i],
-            py = points[i+1];
+      var
+        p = document.createElementNS(svgNS, 'polygon'),
+        x = src.positionX,
+        y = src.positionY,
+        sin = Math.sin(src.rotation / 180 * Math.PI),
+        cos = Math.cos(src.rotation / 180 * Math.PI),
+        t = src.thickness,
+        s = src.size,
+        s2 = s * .5,
+        points = [-t,-s2,  0,-s2-t,  t,-s2,  t,s2,  0,s2+t,  -t,s2];
 
+      // rotate points
+      for (var i = 0; i < points.length; i += 2) {
+        var px = points[i], py = points[i+1];
         points[i] = x + (px * cos - py * sin);
         points[i+1] = y + (px * sin + py * cos);
       }
 
       p.setAttribute('points', points.join(','));
-
-      p.setAttribute('class', 'toy color-' + src.color);
+      p.setAttribute('class', src.toyType + ' toy color-' + src.color);
       container.appendChild(p);
+      break;
+
+    case 'SnakeToy':
+      var
+        g = document.createElementNS(svgNS, 'g'),
+        p = document.createElementNS(svgNS, 'polygon'),
+        x = src.positionX,
+        y = src.positionY,
+        sin = Math.sin(src.rotation / 180 * Math.PI),
+        cos = Math.cos(src.rotation / 180 * Math.PI),
+        t = src.thickness,
+        s = src.size,
+        s2 = s * .5,
+        points = [-t,-s2,  t,-s2,  -t,s2,  t,s2];
+
+      // rotate points
+      for(var i = 0; i < points.length; i += 2) {
+        var px = points[i], py = points[i+1];
+        points[i] = x + (px * cos - py * sin);
+        points[i+1] = y + (px * sin + py * cos);
+      }
+
+      // generate steps
+      var morePoints = [], d = src.snakeDefinition;
+      for (var i = 0; i < d; ++i) {
+        p = document.createElementNS(svgNS, 'polygon');
+        morePoints.length = 0;
+        morePoints.push(points[0] + (points[4] - points[0]) / d * (i+.03));
+        morePoints.push(points[1] + (points[5] - points[1]) / d * (i+.03));
+        morePoints.push(points[2] + (points[6] - points[2]) / d * (i+.03));
+        morePoints.push(points[3] + (points[7] - points[3]) / d * (i+.03));
+        morePoints.push(points[2] + (points[6] - points[2]) / d * (i+1-.03));
+        morePoints.push(points[3] + (points[7] - points[3]) / d * (i+1-.03));
+        morePoints.push(points[0] + (points[4] - points[0]) / d * (i+1-.03));
+        morePoints.push(points[1] + (points[5] - points[1]) / d * (i+1-.03));
+        p.setAttribute('points', morePoints.join(','));
+        g.appendChild(p);
+      }
+
+      g.setAttribute('class', src.toyType + ' toy color-' + src.color);
+      container.appendChild(g);
       break;
 
     default:
@@ -133,6 +165,17 @@ function createToy(src) {
   //container.appendChild(toy.canvas);
   return toy;
 }
+
+// line toy vertices
+//
+// x - t2, y - s2,
+// x, y - s2 - t2,
+// x + t2, y - s2,
+// x + t2, y + s2,
+// x, y + s2 + t2,
+// x - t2, y + s2
+
+
 
 //createSVG();
 

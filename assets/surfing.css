@@ -65,7 +65,8 @@ footer:hover .thumbnail {
   box-shadow: 00px 0 5px 0 rgba(0,0,0,1);
 }
 
-.container *:hover {
+svg .LineToy:hover,
+svg .StepGearToy:hover {
   opacity: .5;
 }
 
@@ -97,6 +98,15 @@ svg .color-yellow2 {
 svg .color-blue2 {
   fill: #77669f;
 }
+
+svg .toy.SnakeToy polygon {
+  opacity: .5;
+}
+
+svg .toy.SnakeToy polygon:hover {
+  opacity: 1;
+}
+
     /*
 
 html,body{ height:100%; }
