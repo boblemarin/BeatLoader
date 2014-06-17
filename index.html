@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>BeatLoader</title>
+    <link rel="stylesheet" type="text/css" href="assets/font/grotzechdcndemiregular.css">
+    <link rel="stylesheet" type="text/css" href="assets/surfing.css">
+  </head>
+  <body>
+
+  <div class="container"></div>
+
+  <footer>
+    <span class="title"></span>
+    <span class="author"></span>
+    <span class="version"></span>
+    <img class="thumbnail">
+  </footer>
+
+    <script type="text/javascript">
+      // requestAnimationFrame polyfill
+      //(function(){var lastTime=0;var vendors=['ms','moz','webkit','o'];for(var x=0;x<vendors.length&&!window.requestAnimationFrame;++x){window.requestAnimationFrame=window[vendors[x]+'RequestAnimationFrame'];window.cancelAnimationFrame=window[vendors[x]+'CancelAnimationFrame']||window[vendors[x]+'CancelRequestAnimationFrame'];}if(!window.requestAnimationFrame)window.requestAnimationFrame=function(callback,element){var currTime=new Date().getTime();var timeToCall=Math.max(0,16-(currTime-lastTime));var id=window.setTimeout(function(){callback(currTime+timeToCall);},timeToCall);lastTime=currTime+timeToCall;return id;};if(!window.cancelAnimationFrame)window.cancelAnimationFrame=function(id){clearTimeout(id);};}());
+    </script>
+
+    <script type="text/javascript">
+
+var request, scene, container, toys,
+    colors = {
+      blue: '#459a9b',
+      yellow: '#f69539',
+      pink: '#e4679a',
+      green: '#22b14b',
+      white: '#bbbdbf',
+      pink2: '#e22851',
+      yellow2: '#fefe48',
+      blue2: '#77669f'
+    };
+
+//load();
+
+function onDragOver(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+}
+document.addEventListener("dragover", onDragOver, false);
+
+function onDrop(e) {
+  e.stopPropagation();
+  e.preventDefault();
+
+  openFile( e.dataTransfer.files[0] );
+}
+document.addEventListener("drop", onDrop, false );
+
+function openFile( f ) {
+  var r = new FileReader();
+  r.onloadend = function(e){
+    try {
+      scene = JSON.parse(e.target.result);
+      init();
+    } catch(e) {
+      alert("Error loading BeatSurfing scene. Please check your file...");
+    }
+  };
+  r.readAsText(f);
+}
+
+function load() {
+  request = new XMLHttpRequest();
+  request.onload = onLoadEnd;
+  request.open('GET', 'TestCouleurs.bs', true);
+  request.send();
+}
+
+function onLoadEnd() {
+  scene = JSON.parse(request.response);
+  // request.onload = null;
+  // request = null;
+  init();
+}
+
+function init() {
+  console.log(scene);
+
+  // place copyright info and thumbnail
+  document.querySelector('footer .title').innerHTML = scene.title;
+  document.querySelector('footer .author').innerHTML = 'par ' + scene.author;
+  document.querySelector('footer .version').innerHTML = 'v' + scene.version;
+
+
+  document.querySelector('footer .thumbnail').src = 'data:image/png;base64,' + scene.screenshot;
+
+  // draw toys
+  container = document.querySelector('.container');
+  container.innerHTML = '';
+
+  var i = 0,
+      n = scene.toys.length,
+      c,ctx;
+  toys = [];
+  for (i; i < n; i++) {
+    toys.push(createToy(scene.toys[i]));
+  }
+}
+
+function createToy(src) {
+  var toy = {
+    src: src,
+    canvas: document.createElement('canvas')
+  }
+  toy.canvas.width = 1024;
+  toy.canvas.height = 758;
+  var ctx = toy.canvas.getContext('2d'),
+      x = src.positionX,
+      y = src.positionY,
+      r = src.radius,
+      t = src.thickness,
+      s = src.size;
+
+  console.log("Toy: "+ src.color + " (" + src.positionX + " - " + src.positionY + ")" );
+
+  switch (src.toyType) {
+    case 'StepGearToy':
+    case 'PolygonToy' :
+      ctx.fillStyle = colors[src.color];
+      ctx.beginPath();
+      ctx.moveTo(src.positionX+src.radius, src.positionY);
+      ctx.arc(src.positionX, src.positionY, src.radius, 0, 2*Math.PI, true);
+      ctx.fill();
+      break;
+
+    case 'LineToy':
+      var s = Math.sin(src.rotation / 180 * Math.PI);
+      var c = Math.cos(src.rotation / 180 * Math.PI);
+      ctx.strokeStyle = colors[src.color];
+      ctx.lineWidth = src.thickness;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(src.positionX - s * src.size * .5, src.positionY + c * src.size * .5);
+      ctx.lineTo(src.positionX + s * src.size * .5, src.positionY - c * src.size * .5);
+      ctx.stroke();
+      break;
+  }
+
+  toy.ctx = ctx;
+  container.appendChild(toy.canvas);
+  return toy;
+}
+
+function createSVG(points) {
+  var s = document.createElement('svg'),
+      p = document.createElement('polygon');
+
+  //p.setAttribute('points',)
+
+}
+/*
+TODO:
+
+affiner le dessin des éléments
+
+
+au niveau des collisions :
+- intersection entre deux segments (finis) pour les lignes.
+quoique c'est quand même de grosses lignes, ça reste à voir.
+
+- j'ai entre un point et un triangle, ici, c'est aussi un segment.
+
+donc:
+  - segment - segment
+  - segment - triangle
+  - segment - rectangle (sinon deux triangles)
+  - segment - forme arbitraire à 4 sommets (ça peut être deux triangles)
+  - segment - forme arbitraire à 6 sommets (4 triangles)
+
+à noter que un triangle = trois segments, et que quand on en franchit un, on touche à coup sûr le triangle.
+
+avoir une bounding box pour chaque composant,
+faire une autre box avec previousTouch et newTouch. si intersection, passer à plus de tests.
+tester pour un survol rapide qui devrait déclencher le truc, et une pénétration qui dure.
+pour ça, sans doute des tests séparés.
+peut-être s'en tirer avec les triangles ensuite, ça peut suffire comme optimisation...
+ */
+
+    </script>
+
+  </body>
+</html>

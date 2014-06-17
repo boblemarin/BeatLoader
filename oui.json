@@ -1,0 +1,374 @@
+{
+    "title": "Oui",
+    "quantizeMode": 0,
+    "samples": 0,
+    "version": "1.2.3",
+    "dateCreated": "Sat Jun 7 14:33:12 GMT+0200 2014",
+    "assets": null,
+    "toys": [
+        {
+            "currentValueY": 0,
+            "positionY": 332,
+            "ccType": null,
+            "midiFunction": 2,
+            "stepperEnabled": true,
+            "ccMax": 0,
+            "behaviors": [],
+            "currentValueX": 0,
+            "index": 0,
+            "sequencialMode": true,
+            "quantize": 0,
+            "currentStep": 2,
+            "toyName": "StepGearToy0",
+            "snakeType": 0,
+            "interpolatedPoints": null,
+            "thickness": 0,
+            "positionX": 184,
+            "ccAttack": 0,
+            "radius": 70,
+            "size": 0,
+            "ccNumberY": 0,
+            "rotation": 0,
+            "midiNotes": [
+                {
+                    "chord": [
+                        {
+                            "note": 0,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                },
+                {
+                    "chord": [
+                        {
+                            "note": 1,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                },
+                {
+                    "chord": [
+                        {
+                            "note": 2,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                },
+                {
+                    "chord": [
+                        {
+                            "note": 3,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                }
+            ],
+            "ccReturnValueY": 0,
+            "toyType": "StepGearToy",
+            "scale": 1,
+            "ccReturnValue": 0,
+            "snakeDefinition": 0,
+            "midiChannel": 1,
+            "ccMinY": 0,
+            "ccMin": 0,
+            "ccMaxY": 0,
+            "ccRelease": 0,
+            "selected": false,
+            "uid": "0F0CC80D-A9F6-49C4-DCCA-7651987248E0",
+            "loopInStep": 1,
+            "color": "blue",
+            "directionEnabled": false,
+            "ccNumber": 0
+        },
+        {
+            "currentValueY": 0,
+            "positionY": 175,
+            "ccType": null,
+            "midiFunction": 2,
+            "stepperEnabled": false,
+            "ccMax": 0,
+            "behaviors": [],
+            "currentValueX": 0,
+            "index": 2,
+            "sequencialMode": false,
+            "quantize": 0,
+            "currentStep": 0,
+            "toyName": "PolygonToy1",
+            "snakeType": 0,
+            "interpolatedPoints": null,
+            "thickness": 12,
+            "positionX": 624,
+            "ccAttack": 0,
+            "radius": 46,
+            "size": 0,
+            "ccNumberY": 0,
+            "rotation": 25,
+            "midiNotes": [
+                {
+                    "chord": [
+                        {
+                            "note": 0,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                },
+                {
+                    "chord": [
+                        {
+                            "note": 1,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                },
+                {
+                    "chord": [
+                        {
+                            "note": 2,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                },
+                {
+                    "chord": [
+                        {
+                            "note": 3,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                }
+            ],
+            "ccReturnValueY": 0,
+            "toyType": "PolygonToy",
+            "scale": 1,
+            "ccReturnValue": 0,
+            "snakeDefinition": 0,
+            "midiChannel": 1,
+            "ccMinY": 0,
+            "ccMin": 0,
+            "ccMaxY": 0,
+            "ccRelease": 0,
+            "selected": false,
+            "uid": "80CC7804-E266-5963-8404-7651A03E1906",
+            "loopInStep": 0,
+            "color": "blue",
+            "directionEnabled": false,
+            "ccNumber": 0
+        },
+        {
+            "currentValueY": 0,
+            "positionY": 354,
+            "ccType": null,
+            "midiFunction": 2,
+            "stepperEnabled": false,
+            "ccMax": 0,
+            "behaviors": [],
+            "currentValueX": 0,
+            "index": 1,
+            "sequencialMode": false,
+            "quantize": 0,
+            "currentStep": 0,
+            "toyName": "LineToy2",
+            "snakeType": 0,
+            "interpolatedPoints": null,
+            "thickness": 15,
+            "positionX": 621,
+            "ccAttack": 0,
+            "radius": 0,
+            "size": 160,
+            "ccNumberY": 0,
+            "rotation": 0,
+            "midiNotes": [
+                {
+                    "chord": [
+                        {
+                            "note": 0,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                }
+            ],
+            "ccReturnValueY": 0,
+            "toyType": "LineToy",
+            "scale": 1,
+            "ccReturnValue": 0,
+            "snakeDefinition": 0,
+            "midiChannel": 1,
+            "ccMinY": 0,
+            "ccMin": 0,
+            "ccMaxY": 0,
+            "ccRelease": 0,
+            "selected": true,
+            "uid": "BE093769-8DBA-4E83-D863-7651ADD591F0",
+            "loopInStep": 0,
+            "color": "blue",
+            "directionEnabled": false,
+            "ccNumber": 0
+        },
+        {
+            "currentValueY": 0,
+            "positionY": 343,
+            "ccType": null,
+            "midiFunction": 2,
+            "stepperEnabled": false,
+            "ccMax": 0,
+            "behaviors": [],
+            "currentValueX": 0,
+            "index": 3,
+            "sequencialMode": false,
+            "quantize": 0,
+            "currentStep": 0,
+            "toyName": "LineToy3",
+            "snakeType": 0,
+            "interpolatedPoints": null,
+            "thickness": 15,
+            "positionX": 347,
+            "ccAttack": 0,
+            "radius": 0,
+            "size": 160,
+            "ccNumberY": 0,
+            "rotation": 0,
+            "midiNotes": [
+                {
+                    "chord": [
+                        {
+                            "note": 0,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                }
+            ],
+            "ccReturnValueY": 0,
+            "toyType": "LineToy",
+            "scale": 1,
+            "ccReturnValue": 0,
+            "snakeDefinition": 0,
+            "midiChannel": 1,
+            "ccMinY": 0,
+            "ccMin": 0,
+            "ccMaxY": 0,
+            "ccRelease": 0,
+            "selected": false,
+            "uid": "9BBF0A29-2983-6762-7726-7652828842B6",
+            "loopInStep": 0,
+            "color": "blue",
+            "directionEnabled": false,
+            "ccNumber": 0
+        },
+        {
+            "currentValueY": 0,
+            "positionY": 330,
+            "ccType": null,
+            "midiFunction": 2,
+            "stepperEnabled": false,
+            "ccMax": 0,
+            "behaviors": [],
+            "currentValueX": 0,
+            "index": 4,
+            "sequencialMode": false,
+            "quantize": 0,
+            "currentStep": 0,
+            "toyName": "LineToy4",
+            "snakeType": 0,
+            "interpolatedPoints": null,
+            "thickness": 15,
+            "positionX": 477,
+            "ccAttack": 0,
+            "radius": 0,
+            "size": 160,
+            "ccNumberY": 0,
+            "rotation": 0,
+            "midiNotes": [
+                {
+                    "chord": [
+                        {
+                            "note": 0,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                }
+            ],
+            "ccReturnValueY": 0,
+            "toyType": "LineToy",
+            "scale": 1,
+            "ccReturnValue": 0,
+            "snakeDefinition": 0,
+            "midiChannel": 1,
+            "ccMinY": 0,
+            "ccMin": 0,
+            "ccMaxY": 0,
+            "ccRelease": 0,
+            "selected": false,
+            "uid": "B6A030DE-A874-7774-E3AF-7652896BCF5D",
+            "loopInStep": 0,
+            "color": "blue",
+            "directionEnabled": false,
+            "ccNumber": 0
+        },
+        {
+            "currentValueY": 0,
+            "positionY": 432,
+            "ccType": null,
+            "midiFunction": 2,
+            "stepperEnabled": false,
+            "ccMax": 0,
+            "behaviors": [],
+            "currentValueX": 0,
+            "index": 5,
+            "sequencialMode": false,
+            "quantize": 0,
+            "currentStep": 0,
+            "toyName": "LineToy5",
+            "snakeType": 0,
+            "interpolatedPoints": null,
+            "thickness": 15,
+            "positionX": 410,
+            "ccAttack": 0,
+            "radius": 0,
+            "size": 160,
+            "ccNumberY": 0,
+            "rotation": 88,
+            "midiNotes": [
+                {
+                    "chord": [
+                        {
+                            "note": 0,
+                            "velocity": 127,
+                            "calculatedVelocity": 127
+                        }
+                    ]
+                }
+            ],
+            "ccReturnValueY": 0,
+            "toyType": "LineToy",
+            "scale": 1,
+            "ccReturnValue": 0,
+            "snakeDefinition": 0,
+            "midiChannel": 1,
+            "ccMinY": 0,
+            "ccMin": 0,
+            "ccMaxY": 0,
+            "ccRelease": 0,
+            "selected": false,
+            "uid": "F483C270-87F3-53AF-1B5A-76528F490113",
+            "loopInStep": 0,
+            "color": "blue",
+            "directionEnabled": false,
+            "ccNumber": 0
+        }
+    ],
+    "description": "none",
+    "uid": "65D50667-2A0A-C76A-E8CB-765183FEB664",
+    "author": "Boblemarin",
+    "dateModified": "Sat Jun 7 14:35:13 GMT+0200 2014"
+}
