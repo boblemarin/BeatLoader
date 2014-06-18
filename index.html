@@ -57,9 +57,11 @@ load();
 
 
 function init() {
-
-  synth.volumeEnvelopeSettings.releaseTime = 0.1;
-
+  synth.volumeEnvelopeSettings.attackTime = 0.05;
+  synth.volumeEnvelopeSettings.releaseTime = 0.3;
+  synth.oscillators.osc1.waveform = "triangle";
+  synth.oscillators.osc2.waveform = "triangle";
+  synth.oscillators.osc3.waveform = "triangle";
 
   document.addEventListener('touchstart',function(e){ e.preventDefault(); });
 
@@ -250,7 +252,7 @@ FILE LOADING SECTION
 function load() {
   request = new XMLHttpRequest();
   request.onload = onLoadEnd;
-  request.open('GET', 'TestCouleurs.bs', true);
+  request.open('GET', 'min-maj.bs', true);
   request.send();
 }
 
